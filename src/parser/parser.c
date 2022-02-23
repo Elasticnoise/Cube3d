@@ -201,7 +201,7 @@ void    check_my_map(char **map)
                || (it.x == 0 || it.x == ft_strlen(map[it.y]) - 1)))
              || ((map[it.y][it.x] != ' ' && map[it.y][it.x] != '1') && (
                  (it.y != 0 && (map[it.y - 1][it.x]) &&  map[it.y - 1][it.x] == ' ')
-               || (map[it.y + 1][it.x] && map[it.y + 1][it.x] == ' ')
+               || (map[it.y + 1] && ((ft_strlen(map[it.y + 1]) <= it.x) || map[it.y + 1][it.x] == ' '))
                 || (map[it.y][it.x -1] && map[it.y][it.x - 1] == ' ')
                 || (!map[it.y][it.x + 1]  || map[it.y][it.x + 1] == ' '))
                 ))
@@ -211,6 +211,8 @@ void    check_my_map(char **map)
              && (it.x == 0 || it.x == ft_strlen(map[it.y]) - 1)));
                     error_msg("Not valid map\n");
                 }
+            // if (it.y == 6)
+            //     printf("%d and %d\n", it.x, (ft_strlen(map[it.y + 1]) < it.x));
             if (check_char(map[it.y][it.x]) == CORR_CHAR)
                 it.start = 1;
             it.x++;
