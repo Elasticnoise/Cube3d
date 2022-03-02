@@ -1,6 +1,6 @@
 LIBFT = ./42-libft/libft.a
 
-CFLAGS = -ggdb3  -I./includes #-Wall -Werror -Wextra
+CFLAGS = -I./includes #-Wall -Werror -Wextra
 NAME = cube3d
 
 
@@ -15,18 +15,18 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		$(MAKE) -C ./42-libft
-		$(CC) -o $(NAME) $(OBJ) ./42-libft/libft.a
+		$(MAKE) -C ./libft
+		$(CC) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(OBJ) ./libft/libft.a
 
 %.o: %.c
-		gcc $(CFLAGS) -c $< -o $@
+		gcc  $(CFLAGS) -c $< -o $@
 
 clean:
-		$(MAKE) clean -C ./42-libft
+		$(MAKE) clean -C ./libft
 		rm -rf $(OBJ)
 
 fclean: clean
-		$(MAKE) fclean -C ./42-libft
+		$(MAKE) fclean -C ./libft
 		rm -rf $(NAME)
 re: fclean all
 
