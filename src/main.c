@@ -1,5 +1,16 @@
 #include "cube3d.h"
 
+void	*free_array(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+	return (NULL);
+}
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
@@ -103,6 +114,20 @@ int	close_hook(t_all *all)
 	exit (0);
 }
 
+int	key_hook(int keycode, t_all *all)
+{
+	(void) all;
+	(void) keycode;
+	if (keycode == 53)
+	{
+		mlx_destroy_window(all->win->mlx, all->win->mlx_win);
+		free_array(all->map->my_map);
+		exit(0);
+	}
+	actions(keycode, (int)all->plr->x, (int)all->plr->y, all);
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_map	map;
@@ -124,8 +149,9 @@ int	main(int argc, char *argv[])
 	all.win = &win;
 	find_unit(&all);
 	draw(&all);
-	mlx_hook(all.win->mlx_win, 17, 0, close_hook, &all);
+	mlx_hook(win.mlx_win, 17, 0, close_hook, &all);
+	mlx_key_hook(win.mlx_win, key_hook, &all);
 //	mlx_hook(win.win, 2, (1L << 0),  );
-	mlx_loop(all.win->mlx);
+	mlx_loop(win.mlx);
     return (0);
 }
