@@ -154,14 +154,14 @@ void    set_map(t_map *map, char **map_str)
         else if (!ft_strncmp(map_str[i], "SO ", 3))
             set_path(map_str[i], &(map->south));
         else if (!ft_strncmp(map_str[i], "WE ", 3))
-            set_path(map_str[i], &(map->weast));
+            set_path(map_str[i], &(map->west));
         else if (!ft_strncmp(map_str[i], "EA ", 3))
             set_path(map_str[i], &(map->east));
         else if (!ft_strncmp(map_str[i], "F ", 2))
             set_rgb(map_str[i], &(map->floor));
         else if (!ft_strncmp(map_str[i], "C ", 2))
             set_rgb(map_str[i], &(map->ceil));
-        else if ((!(map->north) || !(map->north) || !(map->north) || !(map->north)
+        else if ((!(map->north) || !(map->south) || !(map->east) || !(map->west)
                 || map->floor.R == NOTSET || map->ceil.R == NOTSET) && map_str[i][0] != '\n')
                 error_msg("Not valid map\n");
         else
@@ -205,14 +205,7 @@ void    check_my_map(char **map)
                 || (map[it.y][it.x -1] && map[it.y][it.x - 1] == ' ')
                 || (!map[it.y][it.x + 1]  || map[it.y][it.x + 1] == ' '))
                 ))
-                {
-                    printf("%d -- y, %d -- x, %s --str\n%d adn %d and %d\n", it.y, it.x, map[it.y], !check_char(map[it.y][it.x]),
-                     (check_char(map[it.y][it.x]) == CORR_CHAR && it.start), ((map[it.y][it.x] != ' ' && map[it.y][it.x] != '1') && (it.y == 0 || it.y == it.height) 
-             && (it.x == 0 || it.x == ft_strlen(map[it.y]) - 1)));
                     error_msg("Not valid map\n");
-                }
-            // if (it.y == 6)
-            //     printf("%d and %d\n", it.x, (ft_strlen(map[it.y + 1]) < it.x));
             if (check_char(map[it.y][it.x]) == CORR_CHAR)
                 it.start = 1;
             it.x++;

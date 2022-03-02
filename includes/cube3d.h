@@ -30,7 +30,7 @@ typedef struct s_map
     char    **my_map;
     char    *north;
     char    *south;
-    char    *weast;
+    char    *west;
     char    *east;
     t_color floor;
     t_color ceil;
@@ -71,7 +71,7 @@ typedef struct s_all
 {
 	t_win	*win;
 	t_map	*map;
-	t_plr	plr;
+	t_plr	*plr;
 }t_all;
 
 // error.c
@@ -82,4 +82,6 @@ int	ft_strcmp(const char *s1, const char *s2);
 
 //parser
 int check_map(char *str, t_map *map);
+int check_char(char c);
+void	find_unit(t_all *all);
 #endif

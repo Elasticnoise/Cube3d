@@ -70,6 +70,37 @@ void	draw(t_all *all)
 		}
 		y++;
 	}
+	scale(all->win, 0xFF0000, (int)all->plr->x, (int)all->plr->y);
+}
+
+void	find_unit(t_all *all)
+{
+	t_plr plr;
+	int i;
+	int j;
+
+	i = 0;
+	while (all->map->my_map[i])
+	{
+		j = 0;
+		while (all->map->my_map[i][j])
+		{
+			if (check_char(all->map->my_map[i][j]) == CORR_CHAR)
+			{
+				plr.x = (float) j;
+				plr.y = (float) i;
+			}
+			j++;
+		}
+		i++;
+	}
+	all->plr = &plr;
+}
+
+int	close_hook(t_all *all)
+{
+	(void)all;
+	exit (0);
 }
 
 int	main(int argc, char *argv[])
@@ -91,8 +122,9 @@ int	main(int argc, char *argv[])
 //	mlx_put_image_to_window(win.mlx, win.mlx_win, win.img, 0, 0);
 //	mlx_loop(win.mlx);
 	all.win = &win;
-
+	find_unit(&all);
 	draw(&all);
+	mlx_hook(all.win->mlx_win, 17, 0, close_hook, &all);
 //	mlx_hook(win.win, 2, (1L << 0),  );
 	mlx_loop(all.win->mlx);
     return (0);
