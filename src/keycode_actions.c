@@ -22,7 +22,6 @@ static void	go_left(int x, int y, t_all *all)
 //			all->map->my_map[x][y] = '0';
 //		all->map->my_map[x - 1][y] = 'P';
 		all->plr->x = x - 1;
-		all->plr->prev_step_flag = all->plr->next_step_flag;
 	}
 }
 
@@ -37,7 +36,6 @@ void	go_right(int x, int y, t_all *all)
 //			game->z_matrix[x][y] = '0';
 //		game->z_matrix[x + 1][y] = 'P';
 		all->plr->x = x + 1;
-		all->plr->prev_step_flag = all->plr->next_step_flag;
 	}
 }
 
@@ -52,7 +50,6 @@ void	go_top(int x, int y, t_all *all)
 //			all->map->my_map[x][y] = '0';
 //		all->map->my_map[x][y - 1] = 'P';
 		all->plr->y = y - 1;
-		all->plr->prev_step_flag = all->plr->next_step_flag;
 	}
 }
 
@@ -67,13 +64,11 @@ void	go_bottom(int x, int y, t_all *all)
 //			all->map->my_map[x][y] = '0';
 //		all->map->my_map[x][y - 1] = 'P';
 		all->plr->y = y + 1;
-		all->plr->prev_step_flag = all->plr->next_step_flag;
 	}
 }
 
 void	actions(int keycode, int x, int y, t_all *all)
 {
-	all->plr->next_step_flag = 0;
 	if (keycode == 13 || keycode == 126)
 		go_top(x, y, all);
 	if (keycode == 1 || keycode == 125)
@@ -82,6 +77,7 @@ void	actions(int keycode, int x, int y, t_all *all)
 		go_left(x, y, all);
 	if (keycode == 2 || keycode == 124)
 		go_right(x, y, all);
-	printf("%f", all->plr->x);
-	draw(all);
+//	printf("%f", all->plr->x);
+//	draw(all);
+//	scale(all->win, 0xFF0000, (int)all->plr->x, (int)all->plr->y);
 }

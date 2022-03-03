@@ -58,7 +58,8 @@ void	scale(t_win *win, int color, int x1, int y1)
 	{
 		while (x1 < x)
 		{
-			mlx_pixel_put(win->mlx, win->mlx_win, x1++, y1, color);
+//			mlx_pixel_put(win->mlx, win->mlx_win, x1++, y1, color);
+			pixel_put(win, x1++, y1, color);
 		}
 		x1 -= SIZE;
 		y1++;
@@ -69,10 +70,11 @@ void	draw(t_all *all)
 {
 	int x = 0, y = 0;
 
+	printf("%f x %f y DRAW\n", all->plr->x, all->plr->y);
 	while (all->map->my_map[y])
 	{
 		x = 0;
-		printf("%s\n", all->map->my_map[y]);
+//		printf("%s\n", all->map->my_map[y]);
 		while (all->map->my_map[y][x])
 		{
 			if (all->map->my_map[y][x] == '1')
@@ -84,28 +86,40 @@ void	draw(t_all *all)
 	scale(all->win, 0xFF0000, (int)all->plr->x, (int)all->plr->y);
 }
 
-void	find_unit(t_all *all)
+void draw_player(t_all *all, t_plr *pl)
 {
-	t_plr plr;
-	int i;
-	int j;
+	t_plr plr = *all->plr;
+
+	while (all->map->my_map[(int)(plr.y / SIZE)][(int)(plr.x / SIZE)] != '1')
+	{
+		plr.x += cos(plr.dir);
+		plr.y += sin(plr.dir);
+		pixel_put(all->win, plr.x, plr.y, 0x990099);
+	}
+
+}
+
+void	find_unit(t_plr	*plr, char **my_map)
+{
+	int		i;
+	int		j;
 
 	i = 0;
-	while (all->map->my_map[i])
+	plr->dir = 3 * M_PI_2;
+	while (my_map[i])
 	{
 		j = 0;
-		while (all->map->my_map[i][j])
+		while (my_map[i][j])
 		{
-			if (check_char(all->map->my_map[i][j]) == CORR_CHAR)
+			if (check_char(my_map[i][j]) == CORR_CHAR)
 			{
-				plr.x = (float) j;
-				plr.y = (float) i;
+				plr->x = (float) j;
+				plr->y = (float) i;
 			}
 			j++;
 		}
 		i++;
 	}
-	all->plr = &plr;
 }
 
 int	close_hook(t_all *all)
@@ -118,13 +132,36 @@ int	key_hook(int keycode, t_all *all)
 {
 	(void) all;
 	(void) keycode;
-	if (keycode == 53)
+	mlx_clear_window(all->win->mlx, all->win->mlx_win);
+
+//	if (keycode == 53)
+//	{
+//		mlx_destroy_window(all->win->mlx, all->win->mlx_win);
+//		free_array(all->map->my_map);
+//		exit(0);
+//	}
+//	actions(keycode, (int)all->plr->x, (int)all->plr->y, all);
+	if (keycode == 13 || keycode == 126)
 	{
-		mlx_destroy_window(all->win->mlx, all->win->mlx_win);
-		free_array(all->map->my_map);
-		exit(0);
+//		all->plr->x += sin(all->plr->dir) * 4;
+		all->plr->y -= 1;
+//		all->plr->y += cos(all->plr->dir) * 4;
 	}
-	actions(keycode, (int)all->plr->x, (int)all->plr->y, all);
+	if (keycode == 1 || keycode == 125)
+	{
+//		all->plr->x -= sin(all->plr->dir) * 4;
+		all->plr->y += 1;
+//		all->plr->y -= cos(all->plr->dir) * 4;
+	}
+	if (keycode == 0 || keycode == 123)
+		all->plr->x -= 1;
+//		all->plr->dir -= 0.1;
+	if (keycode == 2 || keycode == 124)
+		all->plr->x += 1;
+//		all->plr->dir += 0.1;
+	if (keycode == 53)
+		exit(0);
+	draw(all);
 	return (0);
 }
 
@@ -133,12 +170,16 @@ int	main(int argc, char *argv[])
 	t_map	map;
 	t_all	all;
 	t_win	win;
+	t_plr	plr;
 
 	errno = 0;
 	if (argc != 2)
         error_msg("Not correct number of arguments\n");
     check_map(argv[1], &map);
 	all.map = &map;
+	find_unit(&plr, all.map->my_map);
+	all.plr = &plr;
+	printf("%f x %f y BEGIN\n", all.plr->x, all.plr->y);
 	win.mlx = mlx_init();
 	win.mlx_win = mlx_new_window(win.mlx, 620, 480, "Cub3D");
 	win.img = mlx_new_image(win.mlx, 620, 480);
@@ -147,10 +188,11 @@ int	main(int argc, char *argv[])
 //	mlx_put_image_to_window(win.mlx, win.mlx_win, win.img, 0, 0);
 //	mlx_loop(win.mlx);
 	all.win = &win;
-	find_unit(&all);
+
 	draw(&all);
-	mlx_hook(win.mlx_win, 17, 0, close_hook, &all);
-	mlx_key_hook(win.mlx_win, key_hook, &all);
+	mlx_hook(win.mlx_win, 2, (1L << 0), &key_hook, &all);
+//	mlx_hook(win.mlx_win, 17, 0, close_hook, &/all);
+//	mlx_key_hook(win.mlx_win, key_hook, &all);
 //	mlx_hook(win.win, 2, (1L << 0),  );
 	mlx_loop(win.mlx);
     return (0);

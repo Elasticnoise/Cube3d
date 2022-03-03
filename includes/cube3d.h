@@ -51,7 +51,7 @@ typedef struct s_win
 	void	*mlx;
 	void	*img;
 	void	*mlx_win;
-	void	*addr;
+	char	*addr;
 	int		line_l;
 	int		bpp;
 	int		en;
@@ -65,8 +65,6 @@ typedef struct	s_plr //структура для игрока и луча
 	float		dir;
 	float		start;
 	float		end;
-	int			prev_step_flag;
-	int			next_step_flag;
 }				  t_plr;
 
 typedef struct s_all
@@ -83,10 +81,11 @@ void	error_msg(char *str);
 int	ft_strcmp(const char *s1, const char *s2);
 
 //parser
-int check_map(char *str, t_map *map);
-int check_char(char c);
-void	find_unit(t_all *all);
+int 	check_map(char *str, t_map *map);
+int 	check_char(char c);
+void	find_unit(t_plr	*plr, char **my_map);
 void	draw(t_all *all);
 void	actions(int keycode, int x, int y, t_all *all);
 void	*free_array(char **arr);
+void	scale(t_win *win, int color, int x1, int y1);
 #endif
