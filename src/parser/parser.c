@@ -1,5 +1,4 @@
-#include "cube3d.h"
-
+#include "../includes/cube3d.h"
 
 void    free_map(char **map)
 {
