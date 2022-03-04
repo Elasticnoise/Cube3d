@@ -17,6 +17,7 @@
 # define NOTSET -1
 # define CORR_CHAR 1
 # define CORR_SIGN 2
+#define	GC 0x990099
 
 typedef struct s_color
 {
@@ -88,4 +89,5 @@ void	draw(t_all *all);
 void	actions(int keycode, int x, int y, t_all *all);
 void	*free_array(char **arr);
 void	scale(t_win *win, int color, int x1, int y1);
+void draw_player(t_all *all, t_plr *pl);
 #endif
