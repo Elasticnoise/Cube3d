@@ -58,8 +58,8 @@ void	scale(t_win *win, int color, int x1, int y1)
 	{
 		while (x1 < x)
 		{
-//			mlx_pixel_put(win->mlx, win->mlx_win, x1++, y1, color);
-			pixel_put(win, x1++, y1, color);
+			mlx_pixel_put(win->mlx, win->mlx_win, x1++, y1, color);
+//			pixel_put(win, x1++, y1, color);
 		}
 		x1 -= SIZE;
 		y1++;
@@ -164,6 +164,11 @@ int	key_hook(int keycode, t_all *all)
 	draw(all);
 	return (0);
 }
+
+//void save_img()
+//{
+//	loadImage(texture[0], tw, th, "src/render/wall.xpm");
+//}
 
 int	main(int argc, char *argv[])
 {
