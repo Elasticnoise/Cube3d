@@ -6,9 +6,6 @@ NAME = cube3d
 
 SRC = ./src/main.c ./src/parser/parser_utils.c ./src/error.c \
 		./src/parser/parser.c \
-		./src/render/init_colors.c \
-		./src/render/key_move.c \
-		./src/render/key_move_2.c \
 		./src/keycode_actions.c \
 		./src/keycode_actions_check.c \
 

@@ -69,13 +69,13 @@ void	go_bottom(int x, int y, t_all *all)
 
 void	actions(int keycode, int x, int y, t_all *all)
 {
-	if (keycode == 13)
+	if (keycode == 13 || keycode == 126)
 		go_top(x, y, all);
-	if (keycode == 1)
+	if (keycode == 1 || keycode == 125)
 		go_bottom(x, y, all);
-	if (keycode == 0)
+	if (keycode == 0 || keycode == 123)
 		go_left(x, y, all);
-	if (keycode == 2)
+	if (keycode == 2 || keycode == 124)
 		go_right(x, y, all);
 //	printf("%f", all->plr->x);
 //	draw(all);
