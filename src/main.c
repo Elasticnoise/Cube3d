@@ -97,9 +97,16 @@ void draw_player(t_all *all, t_plr *pl)
 {
 	t_plr	plr = *all->plr;
 
+	int s;
+	s = 16;
 	plr.start = plr.dir - M_PI_4;
 	plr.end = plr.dir + M_PI_4;
+//	all->win->img = mlx_xpm_file_to_image(all->win->mlx,
+//										  "/Users/ghanh/Dev/Cube3d/texture/first.xpm", &s,
+//										  &s);
 	printf("%d and %d  sadsadas\n", (int) (plr.y / SIZE), (int) (plr.x / SIZE));
+//	mlx_put_image_to_window(all->win->mlx, all->win->mlx_win, all->win->img, plr.x
+//																			 * SIZE, plr.y * SIZE);
 	while (plr.start < plr.end)
 	{
 		plr.x = pl->x;
@@ -107,37 +114,16 @@ void draw_player(t_all *all, t_plr *pl)
 		while (all->map->my_map[(int) (plr.y / SIZE)][(int) (plr.x / SIZE)] !=
 			   '1')
 		{
-
 			plr.x += cos(plr.start);
 			plr.y += sin(plr.start);
-			pixel_put(all->win, plr.x, plr.y, GC);
+//			pixel_put(all->win, plr.x, plr.y, GC);
 		}
+		printf("%d and %d  KEKS\n", (int) (plr.y), (int) (plr.x));
 		plr.start += M_PI_2 / 640;
 	}
 }
 
-void	find_unit(t_plr	*plr, char **my_map)
-{
-	int		i;
-	int		j;
 
-	i = 0;
-	plr->dir = 3 * M_PI_2;
-	while (my_map[i])
-	{
-		j = 0;
-		while (my_map[i][j])
-		{
-			if (check_char(my_map[i][j]) == CORR_CHAR)
-			{
-				plr->x = (float) j * SIZE;
-				plr->y = (float) i * SIZE;
-			}
-			j++;
-		}
-		i++;
-	}
-}
 
 int	close_hook(t_all *all)
 {
@@ -149,7 +135,7 @@ int	key_hook(int keycode, t_all *all)
 {
 	(void) all;
 	(void) keycode;
-	mlx_clear_window(all->win->mlx, all->win->mlx_win);
+//	mlx_clear_window(all->win->mlx, all->win->mlx_win);
 
 //	if (keycode == 53)
 //	{
@@ -196,22 +182,17 @@ int	main(int argc, char *argv[])
     check_map(argv[1], &map);
 	all.map = &map;
 	find_unit(&plr, all.map->my_map);
-	all.plr = &plr;
-	printf("%f x %f y BEGIN\n", all.plr->x, all.plr->y);
-	win.mlx = mlx_init();
-	win.mlx_win = mlx_new_window(win.mlx, 620, 480, "Cub3D");
-	win.img = mlx_new_image(win.mlx, 620, 480);
-	win.addr = mlx_get_data_addr(win.img, &win.bpp, &win.line_l, &win.en);
-//	pixel_put(&win, 20, 20, 0xFFFFF);
-//	mlx_put_image_to_window(win.mlx, win.mlx_win, win.img, 0, 0);
+//	all.plr = &plr;
+//	printf("%f x %f y BEGIN\n", all.plr->x, all.plr->y);
+//	win.mlx = mlx_init();
+//	win.mlx_win = mlx_new_window(win.mlx, 620, 480, "Cub3D");
+//	win.img = mlx_new_image(win.mlx, 620, 480);
+//	win.addr = mlx_get_data_addr(win.img, &win.bpp, &win.line_l, &win.en);
+//	all.win = &win;
+////	draw(&all);
+//	mlx_put_image_to_window(all.win->mlx, all.win->mlx_win, all.win->img,
+//							0,0);
+//	mlx_hook(win.mlx_win, 2, (1L << 0), &key_hook, &all);;
 //	mlx_loop(win.mlx);
-	all.win = &win;
-	draw(&all);
-	mlx_hook(win.mlx_win, 2, (1L << 0), &key_hook, &all);
-//	mlx_hook(win.mlx_win, 17, 0, close_hook, &/all);
-//	mlx_key_hook(win.mlx_win, key_hook, &all);
-//	mlx_hook(win.win, 2, (1L << 0),  );
-//	mlx_put_image_to_window(all.win->mlx, all.win->mlx_win, all.win->img, 0,0);
-	mlx_loop(win.mlx);
     return (0);
 }

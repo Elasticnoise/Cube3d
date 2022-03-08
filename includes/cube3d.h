@@ -35,6 +35,8 @@ typedef struct s_map
     char    *east;
     t_color floor;
     t_color ceil;
+	int		height;
+	int 	weight;
     
 }t_map;
 

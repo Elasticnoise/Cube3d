@@ -1,5 +1,35 @@
-#include "cube3d.h"
+#include "../../includes/cube3d.h"
 
+
+void	find_unit(t_plr	*plr, char **my_map)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (my_map[i])
+	{
+		j = 0;
+		while (my_map[i][j])
+		{
+			if (check_char(my_map[i][j]) == CORR_CHAR)
+			{
+				plr->x = (float) j * SIZE;
+				plr->y = (float) i * SIZE;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (my_map[(int)plr->y / SIZE][(int)plr->x / SIZE] == 'N')
+		plr->dir = 3 * M_PI_2;
+	else if (my_map[(int)plr->y / SIZE][(int)plr->x / SIZE] == 'W')
+		plr->dir = 2 * M_PI_2;
+	else if (my_map[(int)plr->y / SIZE][(int)plr->x / SIZE] == 'E')
+		plr->dir = 0;
+	else
+		plr->dir = M_PI_2;
+}
 
 void    free_map(char **map)
 {
@@ -31,7 +61,7 @@ static int	cust_atoi(char *str)
 	long long int	answ;
 
 	answ = 0;
-	if (*str != '+' && *str != '-' && (*str < '0' || *str > '9'))
+	if (*str != '+' && (*str < '0' || *str > '9') && (*str != ' '))
 		error_msg("Not Valid map\n");
 	while (*str == ' ' || *str == '\t' || *str == '\n'
 		|| *str == '\v' || *str == '\f' || *str == '\r')
@@ -43,6 +73,8 @@ static int	cust_atoi(char *str)
 		answ = answ * 10 + (*str - '0');
 		str++;
 	}
+	while ((*str) == ' ')
+		str++;
 	if ((*str != ' ' && *str != '\0') || (answ > 255 || answ < 0))
 		error_msg("Not Valid map\n");
 	return (answ);
@@ -89,10 +121,7 @@ void    set_rgb(char *str, t_color *color)
         error_msg("Malloc failed\n");
     i = 0;
     while (help[i]) ///////// helps to undestand split // todo ask Slava for correct split
-        {
-            // printf("%s help[i]\n", help[i]);
             i++;
-        }
     if (i != 3)
         error_msg("Not valid map\n");
     color->R = cust_atoi(help[0]);
@@ -120,26 +149,35 @@ void    set_path(char *str, char **new)
 
 void    map_to_char(int i, char **old_map, char **new_map[])
 {
-    int j;
-    int start;
+	t_iter	iter;
+	char	*help;
 
-    while (old_map[i][0] == '\n')
-        i++;
-    start = i;
-    while (old_map[i])
-        i++;
-    *new_map = ft_calloc(sizeof(char *), i - start + 1);
-    if (!(*new_map))
-        error_msg("Malloc failed\n");
-    j = 0;
-    while (old_map[start])
-    {
-        (*new_map)[j] = ft_substr(old_map[start], 0, ft_strlen(old_map[start]));
-        if (!(*new_map)[j])
-            error_msg("Malloc failed");
-        j++;
-        start++;
-    }
+	ft_memset(&iter, 0, sizeof(t_iter));
+	while (old_map[i][0] == '\n')
+		i++;
+	iter.start = i;
+	while (old_map[i])
+	{
+		if (ft_strlen(old_map[i]) > iter.border)
+			iter.border = ft_strlen(old_map[i]);
+		i++;
+	}
+	*new_map = ft_calloc(sizeof(char *), i - iter.start + 1);
+	help = ft_calloc(sizeof(char), i - iter.start + 1);
+	if (!(*new_map) || !help)
+		error_msg("Malloc failed\n");
+	ft_memset(help, ' ', iter.border);
+	while (old_map[iter.start])
+	{
+		(*new_map)[iter.y] = ft_substr(help, 0, iter.border);
+		if (!(*new_map)[iter.y])
+			error_msg("Malloc failed");
+		(*new_map)[iter.y] = ft_memcpy((*new_map)[iter.y], old_map[iter
+		.start], ft_strlen(old_map[iter.start]));
+		iter.y++;
+		iter.start++;
+	}
+	free(help);
 }
 
 void    set_map(t_map *map, char **map_str)
@@ -216,24 +254,27 @@ void    check_my_map(char **map)
 
 int check_map(char *str, t_map *map)
 {
-    char    *help_str;
-    int     fd;
-    char    **map_str;
+	char    *help_str;
+	int     fd;
+	char    **map_str;
 
-    ft_memset(map, 0, sizeof(t_map));
-    map->floor.R = NOTSET;
-    map->ceil.R = NOTSET;
-    help_str = ft_strrchr(str, '.');
-    if (!help_str || ft_strcmp(help_str, ".cub")) //todo check ".cub" case
-        error_msg("Not correct format of the file\n");
-    fd = open(str, O_RDONLY);
-    if (fd == -1)
-        error_msg("Error");
-    map_str = parsing(fd, str);
-    if (!map_str)
-        error_msg("Malloc failed\n");
-    set_map(map, map_str);
-    free(map_str);
-    check_my_map(map->my_map);
-    return (0);
+	ft_memset(map, 0, sizeof(t_map));
+	map->floor.R = NOTSET;
+	map->ceil.R = NOTSET;
+	help_str = ft_strrchr(str, '.');
+	if (!help_str || ft_strcmp(help_str, ".cub")) //todo check ".cub" case
+		error_msg("Not correct format of the file\n");
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		error_msg("Error");
+	map_str = parsing(fd, str);
+	if (!map_str)
+		error_msg("Malloc failed\n");
+	set_map(map, map_str);
+	free_map(map_str);
+	check_my_map(map->my_map);
+	map->weight = ft_strlen(map->my_map[0]);
+	while (map->my_map[map->height])
+		map->height++;
+	return (0);
 }
