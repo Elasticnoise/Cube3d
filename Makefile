@@ -8,6 +8,12 @@ SRC = ./src/main.c ./src/parser/parser_utils.c ./src/error.c \
 		./src/parser/parser.c \
 		./src/keycode_actions.c \
 		./src/keycode_actions_check.c \
+		./src/render/draw.c \
+		./srs/render/raycaster.c \
+		./src/render/raycaster2.c \
+		./src/render/set_color.c \
+		./src/render/set_deg.c \
+		./src/render/set_wall. c \
 
 
 CC = gcc
