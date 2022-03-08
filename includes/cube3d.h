@@ -43,7 +43,7 @@ typedef struct s_map
     char    *east;
     t_color floor;
     t_color ceil;
-    
+
 }t_map;
 
 typedef struct s_iter
