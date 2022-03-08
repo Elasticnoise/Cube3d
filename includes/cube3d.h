@@ -13,11 +13,26 @@
 # include "../mlx/mlx.h"
 #include <math.h>
 
+#define WIN_WIDTH 620
+#define WIN_HEIGHT 480
 # define SIZE 16
 # define NOTSET -1
 # define CORR_CHAR 1
 # define CORR_SIGN 2
 #define	GC 0x990099
+# define SOUTH 0
+# define NORTH 1
+# define WEST 2
+# define EAST 3
+# define ONE_RAY_ANGLE(fov, width) fov * 1.0 / width
+
+typedef struct				s_line
+{
+	int						bot;
+	int						top;
+	int						x_pos;
+	double					column_height;
+}							t_line;
 
 typedef struct s_color
 {
@@ -66,6 +81,14 @@ typedef struct	s_plr //структура для игрока и луча
 	float		dir;
 	float		start;
 	float		end;
+	float		delta_x;
+	float		delta_y;
+	int			map_x;
+	int			map_y;
+	int			wall;
+	float		wall_x;
+	float		length;
+	float		perp_length;
 }				  t_plr;
 
 typedef struct s_all
@@ -80,6 +103,17 @@ void	error_msg(char *str);
 
 //main (was in Slava's libft)
 int	ft_strcmp(const char *s1, const char *s2);
+float	vertical_tracing(t_all *game, double deg, t_plr *ray);
+float	horizontal_tracing(t_all *game, double deg, t_plr *ray);
+int		is_looking_up(float deg);
+float	normalize_deg(float deg);
+int		is_looking_right(float deg);
+double	degrees_to_rad(double degrees);
+float	intersection_detector(t_all *all, t_plr *ray, float distance);
+void	north_or_south_wall(t_plr *result, t_plr ray, float dist, float deg);
+void	west_or_east_wall(t_plr *result, t_plr ray, float dist, float deg);
+void	draw_line(t_all *all, t_plr ray, t_line line);
+void	my_mlx_pixel_put(t_win *win, int x, int y, int color);
 
 //parser
 int 	check_map(char *str, t_map *map);
