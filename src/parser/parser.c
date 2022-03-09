@@ -101,7 +101,10 @@ char	**parsing(int file, char *file_name)
 	rd = read(file, str, size);
 	if (rd != size)
 		error_msg("Read error");
+	close(rd);
 	str_split = ft_split(str, '\n');
+	if (!str_split)
+		error_msg("Malloc error\n");
 	free(str);
 	return (str_split);
 }
@@ -162,11 +165,11 @@ void    map_to_char(int i, char **old_map, char **new_map[])
 			iter.border = ft_strlen(old_map[i]);
 		i++;
 	}
-	*new_map = ft_calloc(sizeof(char *), i - iter.start + 1);
-	help = ft_calloc(sizeof(char), i - iter.start + 1);
+	(*new_map) = ft_calloc(sizeof(char *), i - iter.start + 1);
+	help = ft_calloc(sizeof(char), iter.border + 1);
 	if (!(*new_map) || !help)
 		error_msg("Malloc failed\n");
-	ft_memset(help, ' ', iter.border);
+	help = ft_memset(help, ' ', iter.border);
 	while (old_map[iter.start])
 	{
 		(*new_map)[iter.y] = ft_substr(help, 0, iter.border);
@@ -204,7 +207,7 @@ void    set_map(t_map *map, char **map_str)
                 error_msg("Not valid map\n");
         else
             {
-                map_to_char(i, map_str, &(map->my_map));
+                map_to_char(i, map_str, &map->my_map);
                 return ;
             }
         i++;
@@ -235,7 +238,7 @@ void    check_my_map(char **map)
         {
             if (!check_char(map[it.y][it.x])
              || (check_char(map[it.y][it.x]) == CORR_CHAR && it.start)
-             || ((map[it.y][it.x] != ' ' && map[it.y][it.x] != '1') && ((it.y == 0 || it.y == it.height) 
+             || ((map[it.y][it.x] != ' ' && map[it.y][it.x] != '1') && ((it.y == 0 || it.y == it.height)
                || (it.x == 0 || it.x == ft_strlen(map[it.y]) - 1)))
              || ((map[it.y][it.x] != ' ' && map[it.y][it.x] != '1') && (
                  (it.y != 0 && (map[it.y - 1][it.x]) &&  map[it.y - 1][it.x] == ' ')
@@ -273,7 +276,7 @@ int check_map(char *str, t_map *map)
 	set_map(map, map_str);
 	free_map(map_str);
 	check_my_map(map->my_map);
-	map->weight = ft_strlen(map->my_map[0]);
+	map->width = ft_strlen(map->my_map[0]);
 	while (map->my_map[map->height])
 		map->height++;
 	return (0);

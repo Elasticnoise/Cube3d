@@ -33,9 +33,9 @@ double	degrees_to_rad(double degrees)
 float	intersection_detector(t_all *all, t_plr *ray, float distance)
 {
 	while (ray->map_x >= 0 && ray->map_y >= 0 &&
-		   ray->map_x < all->map->map_width && ray->map_y < all->map->map_height)
+		   ray->map_x < all->map->width && ray->map_y < all->map->height)
 	{
-		if ((all->map)[ray->map_y][ray->map_x] == '1')
+		if ((all->map->my_map)[ray->map_y][ray->map_x] == '1')
 		{
 			distance = get_vector_length(all, *ray);
 			break ;

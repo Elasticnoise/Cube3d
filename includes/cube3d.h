@@ -41,9 +41,30 @@ typedef struct s_color
     int B;
 }t_color;
 
+//typedef struct				s_texture
+//{
+//	void					*img;
+//	int						text_x;
+//	int						text_y;
+//	char					*addr;
+//	int						width;
+//	int						height;
+//	int						bits_per_pixel;
+//	int						line_length;
+//	int						endian;
+//}							t_texture;
+
 typedef struct s_map
 {
     char    **my_map;
+	void	*n_img;
+	void	*e_img;
+	void	*w_img;
+	void	*s_img;
+	void	*n_adr;
+	void	*s_adr;
+	void	*e_adr;
+	void	*w_adr;
     char    *north;
     char    *south;
     char    *west;
@@ -51,7 +72,10 @@ typedef struct s_map
     t_color floor;
     t_color ceil;
 	int		height;
-	int 	weight;
+	int 	width; ////todo maybe need to fix
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 
 }t_map;
 
@@ -116,7 +140,8 @@ void	north_or_south_wall(t_plr *result, t_plr ray, float dist, float deg);
 void	west_or_east_wall(t_plr *result, t_plr ray, float dist, float deg);
 void	draw_line(t_all *all, t_plr ray, t_line line);
 void	my_mlx_pixel_put(t_win *win, int x, int y, int color);
-
+int		raycaster(t_all *all);
+float	get_vector_length(t_all *game, t_plr ray);
 //parser
 int 	check_map(char *str, t_map *map);
 int 	check_char(char c);
@@ -126,4 +151,5 @@ void	actions(int keycode, int x, int y, t_all *all);
 void	*free_array(char **arr);
 void	scale(t_win *win, int color, int x1, int y1);
 void draw_player(t_all *all, t_plr *pl);
+void    free_map(char **map);
 #endif

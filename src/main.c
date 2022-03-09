@@ -69,11 +69,11 @@ void	scale(t_win *win, int color, int x1, int y1)
 void	draw(t_all *all)
 {
 	int x = 0, y = 0;
-	t_win *win = all->win;
+//	t_win *win = all->win;
 
 	printf("%f x %f y DRAW\n", all->plr->x, all->plr->y);
-	win->img = mlx_new_image(win->mlx, 620, 480);
-	win->addr = mlx_get_data_addr(win->img, &win->bpp, &win->line_l, &win->en);
+//	win->img = mlx_new_image(win->mlx, 620, 480);
+//	win->addr = mlx_get_data_addr(win->img, &win->bpp, &win->line_l, &win->en);
 	while (all->map->my_map[y])
 	{
 		x = 0;
@@ -90,7 +90,7 @@ void	draw(t_all *all)
 //	scale(all->win, 0xFF0000, (int)(all->plr->x / SIZE), (int)(all->plr->y /
 //	SIZE));
 	mlx_put_image_to_window(all->win->mlx, all->win->mlx_win, all->win->img, 0,0);
-	mlx_destroy_image(all->win->mlx, all->win->img);
+//	mlx_destroy_image(all->win->mlx, all->win->img);
 }
 
 void draw_player(t_all *all, t_plr *pl)
@@ -169,6 +169,23 @@ int	key_hook(int keycode, t_all *all)
 	return (0);
 }
 
+void	textures_init(t_all *all)
+{
+	int width;
+	int height;
+	all->map->n_img = mlx_xpm_file_to_image(all->win->mlx, all->map->north,
+									&width, &height);
+	all->map->e_img = mlx_xpm_file_to_image(all->win->mlx, all->map->east,
+											&width, &height);
+	all->map->w_img = mlx_xpm_file_to_image(all->win->mlx, all->map->west,
+											&width, &height);
+	all->map->s_img = mlx_xpm_file_to_image(all->win->mlx, all->map->south,
+											&width, &height);
+	if (!all->map->n_img || !all->map->w_img || !all->map->s_img ||
+	!all->map->e_img )
+		error_msg("Incorrect textures path ");
+}
+
 int	main(int argc, char *argv[])
 {
 	t_map	map;
@@ -182,17 +199,22 @@ int	main(int argc, char *argv[])
     check_map(argv[1], &map);
 	all.map = &map;
 	find_unit(&plr, all.map->my_map);
-//	all.plr = &plr;
-//	printf("%f x %f y BEGIN\n", all.plr->x, all.plr->y);
-//	win.mlx = mlx_init();
-//	win.mlx_win = mlx_new_window(win.mlx, 620, 480, "Cub3D");
-//	win.img = mlx_new_image(win.mlx, 620, 480);
-//	win.addr = mlx_get_data_addr(win.img, &win.bpp, &win.line_l, &win.en);
-//	all.win = &win;
-////	draw(&all);
-//	mlx_put_image_to_window(all.win->mlx, all.win->mlx_win, all.win->img,
-//							0,0);
-//	mlx_hook(win.mlx_win, 2, (1L << 0), &key_hook, &all);;
-//	mlx_loop(win.mlx);
+	all.plr = &plr;
+
+	printf("%f x %f y BEGIN\n", all.plr->x, all.plr->y);
+	all.win = &win;
+	all.win->mlx = mlx_init();
+	all.win->mlx_win = mlx_new_window(	all.win->mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
+	all.win->img = mlx_new_image(	all.win->mlx, WIN_WIDTH, WIN_HEIGHT);
+	all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bpp, &all.win->line_l, &all.win->en);
+	textures_init(&all);
+//	draw(&all);  //// 2D map
+	raycaster(&all);
+	mlx_put_image_to_window(all.win->mlx, all.win->mlx_win, all.win->img,
+							0,0);
+	mlx_hook(all.win->mlx_win, 2, (1L << 0), &key_hook, &all);;
+	mlx_loop(all.win->mlx);
+
+//	exit(0);
     return (0);
 }
