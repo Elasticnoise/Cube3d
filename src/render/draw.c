@@ -36,9 +36,11 @@ void	draw_line(t_all *all, t_plr ray, t_line line)
 	}
 	draw_texture(all, ray, line);
 	i = line.bot;
+//	printf("%d -- color\n",all->floor_color );
 	while (i < WIN_HEIGHT)
 	{
 		my_mlx_pixel_put(all->win, line.x_pos, i, all->floor_color);
+
 		i++;
 	}
 }

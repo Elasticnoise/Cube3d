@@ -1,7 +1,7 @@
 #include "../../includes/cube3d.h"
 
 
-void	find_unit(t_plr	*plr, char **my_map)
+void	find_unit(t_player	*plr, char **my_map)
 {
 	int		i;
 	int		j;
@@ -14,8 +14,8 @@ void	find_unit(t_plr	*plr, char **my_map)
 		{
 			if (check_char(my_map[i][j]) == CORR_CHAR)
 			{
-				plr->x = (float) j * SIZE;
-				plr->y = (float) i * SIZE;
+				plr->x = (float) j * SIZE + 32;
+				plr->y = (float) i * SIZE + 32;
 			}
 			j++;
 		}

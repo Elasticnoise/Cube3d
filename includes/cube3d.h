@@ -15,7 +15,7 @@
 
 #define WIN_WIDTH 620
 #define WIN_HEIGHT 480
-# define SIZE 16
+# define SIZE 64
 # define NOTSET -1
 # define CORR_CHAR 1
 # define CORR_SIGN 2
@@ -94,6 +94,12 @@ typedef struct s_win
 
 }t_win;
 
+typedef struct				s_player {
+	int						x;
+	int						y;
+	float					dir;
+}							t_player;
+
 typedef struct	s_plr //структура для игрока и луча
 {
 	float		x;
@@ -113,11 +119,12 @@ typedef struct	s_plr //структура для игрока и луча
 
 typedef struct s_all
 {
-	t_win	*win;
-	t_map	*map;
-	t_plr	*plr;
-	int 	floor_color;
-	int		ceil_color;
+	t_win		*win;
+	t_map		*map;
+	t_plr		*plr;
+	t_player	*player;
+	int 		floor_color;
+	int			ceil_color;
 }t_all;
 
 // error.c
@@ -143,7 +150,7 @@ int		get_texture_color(t_texture *texture, int x, int y);
 //parser
 int 	check_map(char *str, t_map *map);
 int 	check_char(char c);
-void	find_unit(t_plr	*plr, char **my_map);
+void	find_unit(t_player	*plr, char **my_map);
 void	draw(t_all *all);
 void	actions(int keycode, int x, int y, t_all *all);
 void	*free_array(char **arr);

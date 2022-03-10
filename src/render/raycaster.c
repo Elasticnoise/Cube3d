@@ -5,8 +5,8 @@ float	get_vector_length(t_all *game, t_plr ray)
 	float delta_x;
 	float delta_y;
 
-	delta_x = ray.x - game->plr->x;
-	delta_y = ray.y - game->plr->y;
+	delta_x = ray.x - game->player->x;
+	delta_y = ray.y - game->player->y;
 	return (sqrt(delta_x * delta_x + delta_y * delta_y));
 }
 
@@ -25,7 +25,7 @@ t_plr 	analize_ray(t_all *all, float deg)
 	else
 		west_or_east_wall(&ray, ray1, dv, deg);
 	ray.perp_length = ray.length
-					  * cos(degrees_to_rad(deg - all->plr->dir));
+					  * cos(degrees_to_rad(deg - all->player->dir));
 	return (ray);
 }
 
@@ -72,7 +72,7 @@ int		raycaster(t_all *all)
 	int		x_vert_line_pos;
 	t_line	vert_line;
 
-	deg = normalize_deg(all->plr->dir - 30);
+	deg = normalize_deg(all->player->dir - 30);
 	x_vert_line_pos = 0;
 	while (x_vert_line_pos < WIN_WIDTH)
 	{
