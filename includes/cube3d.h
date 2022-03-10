@@ -157,4 +157,10 @@ void	*free_array(char **arr);
 void	scale(t_win *win, int color, int x1, int y1);
 void draw_player(t_all *all, t_plr *pl);
 void    free_map(char **map);
+int	cust_atoi(char *str);
+char	**parsing(int file, char *file_name);
+void    set_rgb(char *str, t_color *color);
+void    set_path(char *str, char **new);
+void	check_my_map(char **map);
+void    set_map(t_map *map, char **map_str);
 #endif

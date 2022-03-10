@@ -4,7 +4,8 @@ CFLAGS = -I./includes #-Wall -Werror -Wextra
 NAME = cube3d
 
 
-SRC = ./src/main.c ./src/parser/parser_utils.c ./src/error.c \
+SRC = ./src/main.c ./src/parser/parser_utils.c  ./src/parser/parser_utils2.c  ./src/error.c \
+		./src/parser/parser_utils3.c\
 		./src/parser/parser.c \
 		./src/keycode_actions.c \
 		./src/keycode_actions_check.c \

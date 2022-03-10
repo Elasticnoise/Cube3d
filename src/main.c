@@ -237,7 +237,5 @@ int	main(int argc, char *argv[])
 							0,0);
 	mlx_hook(all.win->mlx_win, 2, (1L << 0), &key_hook, &all);;
 	mlx_loop(all.win->mlx);
-
-//	exit(0);
     return (0);
 }
