@@ -25,6 +25,7 @@
 # define WEST 2
 # define EAST 3
 # define ONE_RAY_ANGLE(fov, width) fov * 1.0 / width
+# define NUM_OF_TEXT 4
 
 typedef struct				s_line
 {
@@ -41,30 +42,31 @@ typedef struct s_color
     int B;
 }t_color;
 
-//typedef struct				s_texture
-//{
-//	void					*img;
-//	int						text_x;
-//	int						text_y;
-//	char					*addr;
-//	int						width;
-//	int						height;
-//	int						bits_per_pixel;
-//	int						line_length;
-//	int						endian;
-//}							t_texture;
+typedef struct				s_texture
+{
+	void					*img;
+	int						text_x;
+	int						text_y;
+	char					*addr;
+	int						width;
+	int						height;
+	int						bits_per_pixel;
+	int						line_length;
+	int						endian;
+}							t_texture;
 
 typedef struct s_map
 {
-    char    **my_map;
-	void	*n_img;
-	void	*e_img;
-	void	*w_img;
-	void	*s_img;
-	void	*n_adr;
-	void	*s_adr;
-	void	*e_adr;
-	void	*w_adr;
+    char    	**my_map;
+	t_texture	*texture;
+//	void	*n_img;
+//	void	*e_img;
+//	void	*w_img;
+//	void	*s_img;
+//	void	*n_adr;
+//	void	*s_adr;
+//	void	*e_adr;
+//	void	*w_adr;
     char    *north;
     char    *south;
     char    *west;

@@ -169,21 +169,25 @@ int	key_hook(int keycode, t_all *all)
 	return (0);
 }
 
+static void	text_help(t_texture *text, char *path, t_all *all)
+{
+	text->img = mlx_xpm_file_to_image(all->win->mlx, path,
+									&text->width, &text->height);
+	if (!text->img)
+		error_msg("Incorrect textures path ");
+	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
+								   &text->line_length, &text->endian);
+}
+
 void	textures_init(t_all *all)
 {
-	int width;
-	int height;
-	all->map->n_img = mlx_xpm_file_to_image(all->win->mlx, all->map->north,
-									&width, &height);
-	all->map->e_img = mlx_xpm_file_to_image(all->win->mlx, all->map->east,
-											&width, &height);
-	all->map->w_img = mlx_xpm_file_to_image(all->win->mlx, all->map->west,
-											&width, &height);
-	all->map->s_img = mlx_xpm_file_to_image(all->win->mlx, all->map->south,
-											&width, &height);
-	if (!all->map->n_img || !all->map->w_img || !all->map->s_img ||
-	!all->map->e_img )
-		error_msg("Incorrect textures path ");
+	all->map->texture = malloc(sizeof(t_texture) * NUM_OF_TEXT);
+	if (!all->map->texture)
+		error_msg("Malloc failed\n");
+	text_help(&(all->map->texture[SOUTH]), all->map->south, all);
+	text_help(&(all->map->texture[NORTH]), all->map->north, all);
+	text_help(&(all->map->texture[WEST]), all->map->west, all);
+	text_help(&(all->map->texture[EAST]), all->map->east, all);
 }
 
 int	main(int argc, char *argv[])
