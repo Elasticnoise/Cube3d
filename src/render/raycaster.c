@@ -28,7 +28,7 @@ t_plr 	analize_ray(t_all *all, float deg)
 					  * cos(degrees_to_rad(deg - all->plr->dir));
 	return (ray);
 }
-//
+
 //void	find_texture_x(t_all *all, t_plr *ray)
 //{
 //	if (ray->wall == SOUTH || ray->wall == NORTH)
