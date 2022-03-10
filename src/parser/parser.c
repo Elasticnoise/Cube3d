@@ -123,7 +123,7 @@ void    set_rgb(char *str, t_color *color)
     if (!help)
         error_msg("Malloc failed\n");
     i = 0;
-    while (help[i]) ///////// helps to undestand split // todo ask Slava for correct split
+    while (help[i])
             i++;
     if (i != 3)
         error_msg("Not valid map\n");

@@ -59,14 +59,6 @@ typedef struct s_map
 {
     char    	**my_map;
 	t_texture	*texture;
-//	void	*n_img;
-//	void	*e_img;
-//	void	*w_img;
-//	void	*s_img;
-//	void	*n_adr;
-//	void	*s_adr;
-//	void	*e_adr;
-//	void	*w_adr;
     char    *north;
     char    *south;
     char    *west;
@@ -124,6 +116,8 @@ typedef struct s_all
 	t_win	*win;
 	t_map	*map;
 	t_plr	*plr;
+	int 	floor_color;
+	int		ceil_color;
 }t_all;
 
 // error.c
