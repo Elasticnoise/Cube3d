@@ -141,9 +141,11 @@ float	intersection_detector(t_all *all, t_plr *ray, float distance);
 void	north_or_south_wall(t_plr *result, t_plr ray, float dist, float deg);
 void	west_or_east_wall(t_plr *result, t_plr ray, float dist, float deg);
 void	draw_line(t_all *all, t_plr ray, t_line line);
+void	draw_texture(t_all *all, t_plr ray, t_line line);
 void	my_mlx_pixel_put(t_win *win, int x, int y, int color);
 int		raycaster(t_all *all);
 float	get_vector_length(t_all *game, t_plr ray);
+int		get_texture_color(t_texture *texture, int x, int y);
 //parser
 int 	check_map(char *str, t_map *map);
 int 	check_char(char c);
