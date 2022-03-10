@@ -31,14 +31,14 @@ void	draw_line(t_all *all, t_plr ray, t_line line)
 	i = 0;
 	while (i < line.top)
 	{
-		my_mlx_pixel_put(all->win, line.x_pos, i, all->map->ceil.B);
+		my_mlx_pixel_put(all->win, line.x_pos, i, all->ceil_color);
 		i++;
 	}
 	draw_texture(all, ray, line);
 	i = line.bot;
 	while (i < WIN_HEIGHT)
 	{
-		my_mlx_pixel_put(all->win, line.x_pos, i, all->map->floor.G);
+		my_mlx_pixel_put(all->win, line.x_pos, i, all->floor_color);
 		i++;
 	}
 }

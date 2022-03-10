@@ -210,8 +210,8 @@ int	main(int argc, char *argv[])
 	all.map = &map;
 	find_unit(&plr, all.map->my_map);
 	all.plr = &plr;
-	all.floor_color = rgb_to_int(map.floor.r, map.floor.g, map.floor.b);
-	all.ceil_color = rgb_to_int(map.ceil.r, map.ceil.g, map.ceil.b);
+	all.floor_color = rgb_to_int(map.floor.R, map.floor.G, map.floor.B);
+	all.ceil_color = rgb_to_int(map.ceil.R, map.ceil.G, map.ceil.B);
 	printf("%f x %f y BEGIN\n", all.plr->x, all.plr->y);
 	all.win = &win;
 	all.win->mlx = mlx_init();
