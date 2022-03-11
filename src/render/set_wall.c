@@ -21,4 +21,3 @@ void	west_or_east_wall(t_plr *result, t_plr ray, float dist, float deg)
 		result->wall = WEST;
 	result->length = dist;
 }
-

@@ -1,6 +1,6 @@
 #include "../../includes/cube3d.h"
 
-int		is_looking_up(float deg)
+int	is_looking_up(float deg)
 {
 	if (deg > 180)
 		return (1);
@@ -17,7 +17,7 @@ float	normalize_deg(float deg)
 	return (deg);
 }
 
-int		is_looking_right(float deg)
+int	is_looking_right(float deg)
 {
 	if (deg < 90 || deg > 270)
 		return (1);
@@ -32,8 +32,8 @@ double	degrees_to_rad(double degrees)
 
 float	intersection_detector(t_all *all, t_plr *ray, float distance)
 {
-	while (ray->map_x >= 0 && ray->map_y >= 0 &&
-		   ray->map_x < all->map->width && ray->map_y < all->map->height)
+	while (ray->map_x >= 0 && ray->map_y >= 0
+		&& ray->map_x < all->map->width && ray->map_y < all->map->height)
 	{
 		if ((all->map->my_map)[ray->map_y][ray->map_x] == '1')
 		{

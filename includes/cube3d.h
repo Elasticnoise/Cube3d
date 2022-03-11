@@ -35,12 +35,12 @@ typedef struct				s_line
 	double					column_height;
 }							t_line;
 
-typedef struct s_color
+typedef struct	s_color
 {
     int R;
     int G;
     int B;
-}t_color;
+}				t_color;
 
 typedef struct				s_texture
 {
@@ -57,32 +57,32 @@ typedef struct				s_texture
 
 typedef struct s_map
 {
-    char    	**my_map;
+    char		**my_map;
 	t_texture	*texture;
-    char    *north;
-    char    *south;
-    char    *west;
-    char    *east;
-    t_color floor;
-    t_color ceil;
-	int		height;
-	int 	width; ////todo maybe need to fix
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+    char		*north;
+    char		*south;
+    char		*west;
+    char		*east;
+    t_color		floor;
+    t_color		ceil;
+	int			height;
+	int			width; ////todo maybe need to fix
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
 
 }t_map;
 
-typedef struct s_iter
+typedef struct	s_iter
 {
     int x;
     int y;
     int border;
     int start;
     int height;
-}t_iter;
+}				t_iter;
 
-typedef struct s_win
+typedef struct	s_win
 {
 	void	*mlx;
 	void	*img;
@@ -92,13 +92,14 @@ typedef struct s_win
 	int		bpp;
 	int		en;
 
-}t_win;
+}				t_win;
 
-typedef struct				s_player {
-	int						x;
-	int						y;
-	float					dir;
-}							t_player;
+typedef struct	s_player
+{
+	int			x;
+	int			y;
+	float		dir;
+}				t_player;
 
 typedef struct	s_plr //структура для игрока и луча
 {
@@ -115,9 +116,9 @@ typedef struct	s_plr //структура для игрока и луча
 	float		wall_x;
 	float		length;
 	float		perp_length;
-}				  t_plr;
+}				t_plr;
 
-typedef struct s_all
+typedef struct	s_all
 {
 	t_win		*win;
 	t_map		*map;
@@ -125,18 +126,15 @@ typedef struct s_all
 	t_player	*player;
 	int 		floor_color;
 	int			ceil_color;
-}t_all;
+}				t_all;
 
-// error.c
 void	error_msg(char *str);
-
-//main (was in Slava's libft)
 int	ft_strcmp(const char *s1, const char *s2);
 float	vertical_tracing(t_all *game, double deg, t_plr *ray);
 float	horizontal_tracing(t_all *game, double deg, t_plr *ray);
-int		is_looking_up(float deg);
+int	is_looking_up(float deg);
 float	normalize_deg(float deg);
-int		is_looking_right(float deg);
+int	is_looking_right(float deg);
 double	degrees_to_rad(double degrees);
 float	intersection_detector(t_all *all, t_plr *ray, float distance);
 void	north_or_south_wall(t_plr *result, t_plr ray, float dist, float deg);
@@ -144,23 +142,23 @@ void	west_or_east_wall(t_plr *result, t_plr ray, float dist, float deg);
 void	draw_line(t_all *all, t_plr ray, t_line line);
 void	draw_texture(t_all *all, t_plr ray, t_line line);
 void	my_mlx_pixel_put(t_win *win, int x, int y, int color);
-int		raycaster(t_all *all);
+int	raycaster(t_all *all);
 float	get_vector_length(t_all *game, t_plr ray);
-int		get_texture_color(t_texture *texture, int x, int y);
+int	get_texture_color(t_texture *texture, int x, int y);
 //parser
-int 	check_map(char *str, t_map *map);
-int 	check_char(char c);
+int	check_map(char *str, t_map *map);
+int	check_char(char c);
 void	find_unit(t_player	*plr, char **my_map);
 void	draw(t_all *all);
 void	actions(int keycode, int x, int y, t_all *all);
 void	*free_array(char **arr);
 void	scale(t_win *win, int color, int x1, int y1);
-void draw_player(t_all *all, t_plr *pl);
-void    free_map(char **map);
+void	draw_player(t_all *all, t_plr *pl);
+void	free_map(char **map);
 int	cust_atoi(char *str);
 char	**parsing(int file, char *file_name);
-void    set_rgb(char *str, t_color *color);
-void    set_path(char *str, char **new);
+void	set_rgb(char *str, t_color *color);
+void	set_path(char *str, char **new);
 void	check_my_map(char **map);
-void    set_map(t_map *map, char **map_str);
+void	set_map(t_map *map, char **map_str);
 #endif
