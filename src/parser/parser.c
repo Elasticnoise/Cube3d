@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lechalme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/11 21:05:46 by lechalme          #+#    #+#             */
+/*   Updated: 2022/03/11 21:05:47 by lechalme         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../../includes/cube3d.h"
 
 void	map_to_char(int i, char **old_map, char **new_map[])
@@ -53,7 +64,7 @@ void	set_map(t_map *map, char **map_str)
 		else if (!ft_strncmp(map_str[i], "C ", 2))
 			set_rgb(map_str[i], &(map->ceil));
 		else if ((!(map->north) || !(map->south) || !(map->east) || !(map->west)
-				|| map->floor.R == NOTSET || map->ceil.R == NOTSET)
+				|| map->floor.r == NOTSET || map->ceil.r == NOTSET)
 			&& map_str[i][0] != '\n')
 			error_msg("Not valid map\n");
 		else

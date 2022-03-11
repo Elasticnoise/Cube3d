@@ -6,11 +6,11 @@
 /*   By: ghanh <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 21:43:46 by ghanh             #+#    #+#             */
-/*   Updated: 2022/03/10 21:43:48 by ghanh            ###   ########.fr       */
+/*   Updated: 2022/03/11 21:05:57 by lechalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "../../includes/cube3d.h"
 
 void	find_unit(t_player	*plr, char **my_map)
 {
@@ -24,21 +24,23 @@ void	find_unit(t_player	*plr, char **my_map)
 		{
 			if (check_char(my_map[it.y][it.x]) == CORR_CHAR)
 			{
-				plr->x = (float) it.x * SIZE + 32;
-				plr->y = (float) it.x * SIZE + 32;
+				it.height = it.y;
+				it.border = it.x;
 			}
 			it.x++;
 		}
 		it.y++;
 	}
-	if (my_map[(int)plr->y / SIZE][(int)plr->x / SIZE] == 'N')
-		plr->dir = 3 * M_PI_2;
-	else if (my_map[(int)plr->y / SIZE][(int)plr->x / SIZE] == 'W')
-		plr->dir = 2 * M_PI_2;
-	else if (my_map[(int)plr->y / SIZE][(int)plr->x / SIZE] == 'E')
+	plr->x = it.border * SIZE + 32;
+	plr->y = it.height * SIZE + 32;
+	if (my_map[it.height][it.border] == 'N')
+		plr->dir = 270;
+	else if (my_map[it.height][it.border] == 'W')
+		plr->dir = 180;
+	else if (my_map[it.height][it.border] == 'E')
 		plr->dir = 0;
 	else
-		plr->dir = M_PI_2;
+		plr->dir = 90;
 }
 
 void	free_map(char **map)

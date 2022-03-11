@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycaster.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lechalme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/11 21:06:29 by lechalme          #+#    #+#             */
+/*   Updated: 2022/03/11 21:06:30 by lechalme         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cube3d.h"
 
 float	get_vector_length(t_all *game, t_plr ray)
@@ -81,7 +93,7 @@ int	raycaster(t_all *all)
 		vert_line = find_vertical_line(all, ray, x_vert_line_pos);
 		draw_line(all, ray, vert_line);
 		x_vert_line_pos++;
-		deg += ONE_RAY_ANGLE(60, WIN_WIDTH);
+		deg += one_ray_angle(60, WIN_WIDTH);
 		deg = normalize_deg(deg);
 	}
 	return (1);

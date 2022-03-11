@@ -1,10 +1,10 @@
 NO texture/first.xpm
-SO texture/first.xpm
-WE texture/first.xpm
-EA texture/first.xpm
+SO texture/wall.xpm
+WE texture/wall2.xpm
+EA texture/wall3.xpm
 
-F 220,100,0
-C  225,30       ,      0
+F 255,223,0
+C  0,77       ,      255
 
 111111111
 100000001           11111111

@@ -6,11 +6,11 @@
 /*   By: ghanh <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 21:52:35 by ghanh             #+#    #+#             */
-/*   Updated: 2022/03/10 21:52:36 by ghanh            ###   ########.fr       */
+/*   Updated: 2022/03/11 21:06:02 by lechalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "../../includes/cube3d.h"
 
 int	check_map(char *str, t_map *map)
 {
@@ -19,8 +19,8 @@ int	check_map(char *str, t_map *map)
 	char	**map_str;
 
 	ft_memset(map, 0, sizeof(t_map));
-	map->floor.R = NOTSET;
-	map->ceil.R = NOTSET;
+	map->floor.r = NOTSET;
+	map->ceil.r = NOTSET;
 	help_str = ft_strrchr(str, '.');
 	if (!help_str || ft_strcmp(help_str, ".cub"))
 		error_msg("Not correct format of the file\n");
@@ -73,7 +73,7 @@ void	set_rgb(char *str, t_color *color)
 	int		i;
 	char	**help;
 
-	if (color->R != NOTSET)
+	if (color->r != NOTSET)
 		error_msg("Not valid map\n");
 	i = 2;
 	while (str[i] == ' ')
@@ -86,9 +86,9 @@ void	set_rgb(char *str, t_color *color)
 		i++;
 	if (i != 3)
 		error_msg("Not valid map\n");
-	color->R = cust_atoi(help[0]);
-	color->G = cust_atoi(help[1]);
-	color->B = cust_atoi(help[2]);
+	color->r = cust_atoi(help[0]);
+	color->g = cust_atoi(help[1]);
+	color->b = cust_atoi(help[2]);
 	i = 2;
 	while (i > -1)
 		free(help[i--]);
@@ -107,4 +107,9 @@ void	set_path(char *str, char **new)
 	*new = ft_substr(str, i, ft_strlen(str) - i);
 	if (!(*new))
 		error_msg("Malloc failed\n");
+}
+
+float	one_ray_angle(int fov, int width)
+{
+	return (fov * 1.0 / width);
 }

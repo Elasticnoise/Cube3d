@@ -6,11 +6,11 @@
 /*   By: ghanh <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 21:57:43 by ghanh             #+#    #+#             */
-/*   Updated: 2022/03/10 21:57:44 by ghanh            ###   ########.fr       */
+/*   Updated: 2022/03/11 21:06:07 by lechalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "../../includes/cube3d.h"
 
 int	check_char(char c)
 {
