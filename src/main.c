@@ -41,7 +41,6 @@ int	key_hook(int keycode, t_all *all)
 {
 	double	side_dir;
 
-	printf("key=====%d", keycode);
 	if (keycode == 53)
 		exit(0);
 	rotate(keycode, all->player);

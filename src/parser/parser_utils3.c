@@ -37,6 +37,12 @@ static	int	help(char **map, int y, int x, int flag)
 	return (0);
 }
 
+void	check(int flag)
+{
+	if (!flag)
+		error_msg("Not valid map\n");
+}
+
 void	check_my_map(char **map)
 {
 	t_iter	it;
@@ -44,7 +50,7 @@ void	check_my_map(char **map)
 	ft_memset(&it, 0, sizeof(t_iter));
 	while (map[it.x])
 		it.x++;
-	it.height = it.x;
+	it.height = it.x - 1;
 	while (map[it.y])
 	{
 		it.x = 0;
@@ -63,4 +69,5 @@ void	check_my_map(char **map)
 		}
 		it.y++;
 	}
+	check(it.start);
 }

@@ -42,9 +42,9 @@ float	horizontal_tracing(t_all *game, double deg, t_plr *ray)
 
 	distance = MAXFLOAT;
 	if (is_looking_up(deg) == 1)
-		ray->delta_y = -1;
+		ray->delta_y = -1 * SIZE;
 	else
-		ray->delta_y = 1;
+		ray->delta_y = 1 * SIZE;
 	if (deg == 0 || deg == 180 || deg == 360)
 		return (distance);
 	if (is_looking_up(deg) == 1)

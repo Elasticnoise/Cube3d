@@ -12,6 +12,20 @@
 
 #include "../../includes/cube3d.h"
 
+void	find_unit_help(t_player *plr, t_iter it, char **my_map)
+{
+	plr->x = it.border * SIZE + 32;
+	plr->y = it.height * SIZE + 32;
+	if (my_map[it.height][it.border] == 'N')
+		plr->dir = 270;
+	else if (my_map[it.height][it.border] == 'W')
+		plr->dir = 180;
+	else if (my_map[it.height][it.border] == 'E')
+		plr->dir = 0;
+	else
+		plr->dir = 90;
+}
+
 void	find_unit(t_player	*plr, char **my_map)
 {
 	t_iter	it;
@@ -31,16 +45,7 @@ void	find_unit(t_player	*plr, char **my_map)
 		}
 		it.y++;
 	}
-	plr->x = it.border * SIZE + 32;
-	plr->y = it.height * SIZE + 32;
-	if (my_map[it.height][it.border] == 'N')
-		plr->dir = 270;
-	else if (my_map[it.height][it.border] == 'W')
-		plr->dir = 180;
-	else if (my_map[it.height][it.border] == 'E')
-		plr->dir = 0;
-	else
-		plr->dir = 90;
+	find_unit_help(plr, it, my_map);
 }
 
 void	free_map(char **map)
@@ -74,12 +79,12 @@ int	cust_atoi(char *str)
 
 	answ = 0;
 	if (*str != '+' && (*str < '0' || *str > '9') && (*str != ' '))
-		error_msg("Not Valid map\n");
+		error_msg("Not valid map\n");
 	while (*str == ' ' || *str == '\t' || *str == '\n'
 		|| *str == '\v' || *str == '\f' || *str == '\r')
 		str++;
 	if (!(*str >= '0' && *str <= '9') || check_lenght(str))
-		error_msg("Not Valid map\n");
+		error_msg("Not valid map\n");
 	while (*str >= '0' && *str <= '9')
 	{
 		answ = answ * 10 + (*str - '0');
@@ -88,6 +93,6 @@ int	cust_atoi(char *str)
 	while ((*str) == ' ')
 		str++;
 	if ((*str != ' ' && *str != '\0') || (answ > 255 || answ < 0))
-		error_msg("Not Valid map\n");
+		error_msg("Not valid map\n");
 	return (answ);
 }

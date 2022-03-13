@@ -15,7 +15,7 @@
 void	error_msg(char *str)
 {
 	ft_putstr_fd("Error\n", 2);
-	if (errno == 0)
+	if (errno == 0 || !ft_strcmp("Not valid map\n", str))
 		ft_putstr_fd(str, 2);
 	else
 		perror(str);

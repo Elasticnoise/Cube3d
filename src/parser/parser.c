@@ -11,15 +11,32 @@
 /* ************************************************************************** */
 #include "../../includes/cube3d.h"
 
+void	map_to_char_help(char **old_map, t_iter iter, char ***new_map, char *
+help)
+{
+	while (old_map[iter.start])
+	{
+		(*new_map)[iter.y] = ft_substr(help, 0, iter.border);
+		if (!(*new_map)[iter.y])
+			error_msg("Malloc failed");
+		(*new_map)[iter.y] = ft_memcpy((*new_map)[iter.y],
+				old_map[iter.start], ft_strlen(old_map[iter.start]));
+		iter.y++;
+		iter.start++;
+	}
+}
+
 void	map_to_char(int i, char **old_map, char **new_map[])
 {
 	t_iter	iter;
 	char	*help;
 
 	ft_memset(&iter, 0, sizeof(t_iter));
-	while (old_map[i][0] == '\n')
+	while (old_map[i] && old_map[i][0] == '\n')
 		i++;
 	iter.start = i;
+	if (!old_map[i])
+		error_msg("Not Valid map");
 	while (old_map[i])
 	{
 		if (ft_strlen(old_map[i]) > iter.border)
@@ -31,16 +48,7 @@ void	map_to_char(int i, char **old_map, char **new_map[])
 	if (!(*new_map) || !help)
 		error_msg("Malloc failed\n");
 	help = ft_memset(help, ' ', iter.border);
-	while (old_map[iter.start])
-	{
-		(*new_map)[iter.y] = ft_substr(help, 0, iter.border);
-		if (!(*new_map)[iter.y])
-			error_msg("Malloc failed");
-		(*new_map)[iter.y] = ft_memcpy((*new_map)[iter.y],
-				old_map[iter.start], ft_strlen(old_map[iter.start]));
-		iter.y++;
-		iter.start++;
-	}
+	map_to_char_help(old_map, iter, new_map, help);
 	free(help);
 }
 
@@ -65,13 +73,10 @@ void	set_map(t_map *map, char **map_str)
 			set_rgb(map_str[i], &(map->ceil));
 		else if ((!(map->north) || !(map->south) || !(map->east) || !(map->west)
 				|| map->floor.r == NOTSET || map->ceil.r == NOTSET)
-			&& map_str[i][0] != '\n')
+			&& map_str[i] && map_str[i][0] != '\n')
 			error_msg("Not valid map\n");
 		else
-		{
-			map_to_char(i, map_str, &map->my_map);
-			return ;
-		}
+			return (map_to_char(i, map_str, &map->my_map));
 		i++;
 	}
 }
